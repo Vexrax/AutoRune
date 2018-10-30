@@ -1,0 +1,17 @@
+{
+  "name": "lolclient",
+  "version": "1.0.0",
+  "description": "LolClient",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Vexrax",
+  "license": "MIT",
+  "dependencies": {
+    "electron": "^3.0.6",
+    "lcu-connector": "^1.0.2",
+    "request": "^2.88.0",
+    "update-js": "^1.7.0"
+  }
+}
