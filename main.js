@@ -1,4 +1,4 @@
-const LCU = require("JavaScript/LCU.js");
+//const LCU = require("JavaScript/LCU");
 const electron = require("electron");
 const url = require("url");
 const path = require("path");

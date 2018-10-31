@@ -19,12 +19,34 @@ header = window.btoa(`${data.username}:${data.password}`);
 function getJSON(endpoint, callback)
 {
     uri = encodeURI(endpoint);
-    request.get(uri, {
-        headers: {
-            "Authorization": `Basic ${this.token}`
+    request.get
+    (
+        uri,
+        {
+            headers:
+            {
+                "Authorization": `Basic ${this.token}`
+            },
+            "rejectUnauthorized": false
         },
-        "rejectUnauthorized": false
-    }, (err, res, data) => {
-        callback(data);
-    });
+        (err, res, data) =>
+        {
+            callback(data);
+        }
+    );
+}
+
+function putRequest(endpoint, callback)
+{
+    request().put
+    (
+        endpoint,
+        {
+            headers:
+                {
+                    "Authorization": `Basic ${this.token}`
+                },
+            "rejectUnauthorized": false,
+        }
+    )
 }

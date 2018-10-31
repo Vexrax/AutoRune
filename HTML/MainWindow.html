@@ -3,14 +3,31 @@
 <head>
     <title>ShoppingList</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <link href="../CSS/MainWindow.css" rel="stylesheet">
 </head>
 <body>
 <nav>
-    <div class="nav-wrapper">
+    <div class="nav-wrapper" id = "1">
         <a class="brand-logo center">Test Button</a>
     </div>
+    <label class="switch">
+        <input type="checkbox">
+        <span class="slider"></span>
+    </label>
 </nav>
-<ul></ul>
 
 </body>
+
+<script>
+    const electron = require('electron');
+    const {ipcRenderer} = electron;
+    const nav =  document.getElementById("1");
+
+    nav.addEventListener('click', onClick);
+
+</script>
+<script src="../JavaScript/LCU.js"></script>
+<script src="../JavaScript/EventHandlers.js"></script>
+
 </html>
+
