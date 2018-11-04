@@ -35,3 +35,8 @@ function setupRunesPage()
 {
 	closeNav();
 }
+
+function onMessageServiceSlider()
+{
+
+}
