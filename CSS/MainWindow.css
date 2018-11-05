@@ -16,8 +16,6 @@
 }
 
 .l-wrap {
-    min-width: 100%;
-    min-height: 100%;
     position: relative;
     overflow: hidden;
 }
@@ -26,16 +24,20 @@
     position: relative;
     width: 100%;
     min-height: 700px;
-    margin: 0 auto;
     top: 40px;
-    background-color: #f1f1f1;
+    background-color: white;
 }
 
 .friendbox {
-    width: 20%;
-    height: 100%;
-    left: 100px;
+    width: 25%;
+    height: 600px;
+    display: inline-block;
+    margin-top: 30px;
+    background-color: #c8c5c1;
+    position: relative;
+    float: right;
 }
+
 
 /*------------------------------------*\
   #SWITCHBOX
