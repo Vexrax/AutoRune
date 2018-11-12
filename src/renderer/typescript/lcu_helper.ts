@@ -1,5 +1,4 @@
 import { LcuConnection } from './lcu/connection';
-import { MatchedMessagePlayerRole } from './ws_messages';
 
 /** Wraps an LcuConnection and implements high-level methods on top of it. */
 export class LcuHelper {
@@ -127,12 +126,12 @@ export class LcuHelper {
   }
 
   /** Set a position in a game lobby. */
-  public async setLobbyPreferredRoles(roles: MatchedMessagePlayerRole[]):
+  public async setLobbyPreferredRoles():
       Promise<void> {
     await this.connection.request(
         'PUT', '/lol-lobby/v1/lobby/members/localMember/position-preferences',
-        { firstPreference: roles[0] || 'FILL',
-          secondPreference: roles[1] || 'FILL'});
+        { firstPreference:  'FILL',
+          secondPreference:  'FILL'});
   }
 
   /** Click the 'Start' button in the lobby. */

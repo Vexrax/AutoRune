@@ -1,5 +1,5 @@
 //const LCU = require("JavaScript/LCU");
-const electron = require("electron");
+import { app, BrowserWindow, Menu } from 'electron';
 const url = require("url");
 const path = require("path");
 
