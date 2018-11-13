@@ -146,4 +146,34 @@ export class LcuHelper {
     const url = `/lol-lobby/v2/received-invitations/${invitationId}/accept`;
     await this.connection.request('POST', url, {});
   }
+
+  public async setRunPage(runeArray: number[], id: number, primaryRunePage: number, secondaryRunePage: number): Promise<void>
+  {
+      const url = `/lol-perks/v1/pages`;
+      var data =
+          {
+              "autoModifiedSelections": [],
+              "current": true,
+              "id": id,
+              "isActive": false,
+              "isDeletable": true,
+              "isEditable": true,
+              "isValid": true,
+              "lastModified": 1542074949041,
+              "name": "ADC Standard 2",
+              "order": 1,
+              "primaryStyleId": primaryRunePage,
+              "selectedPerkIds": runeArray,
+              "subStyleId": secondaryRunePage
+          };
+      await this.connection.request('POST', url, data);
+  }
+  
+  public async getRunPageList(): Promise<void>
+  {
+      const url =`/lol-perks/v1/pages`;
+      await this.connection.request('GET', url, {});
+  }
+
+
 }
