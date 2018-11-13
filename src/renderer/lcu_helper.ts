@@ -147,20 +147,19 @@ export class LcuHelper {
     await this.connection.request('POST', url, {});
   }
 
-  public async setRunPage(runeArray: number[], id: number, primaryRunePage: number, secondaryRunePage: number): Promise<void>
+  /** Set a rune page **/
+  public async setRunePage(runeArray: number[], primaryRunePage: number, secondaryRunePage: number): Promise<void>
   {
       const url = `/lol-perks/v1/pages`;
       var data =
           {
               "autoModifiedSelections": [],
               "current": true,
-              "id": id,
               "isActive": false,
               "isDeletable": true,
               "isEditable": true,
               "isValid": true,
-              "lastModified": 1542074949041,
-              "name": "ADC Standard 2",
+              "name": "Champion gg",
               "order": 1,
               "primaryStyleId": primaryRunePage,
               "selectedPerkIds": runeArray,
@@ -168,7 +167,7 @@ export class LcuHelper {
           };
       await this.connection.request('POST', url, data);
   }
-  
+  /** Gets the list of runepages **/
   public async getRunPageList(): Promise<void>
   {
       const url =`/lol-perks/v1/pages`;
