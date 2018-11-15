@@ -113,7 +113,7 @@ export class UiController
             'OnJsonApiEvent', (_: string, payload: any) =>
             {
                 //logic for checking if your champ is locked in.%
-                if(payload.uri === '/lol-champ-select-legacy/v1/session')
+                if(payload.uri === '/lol-champ-select-legacy/v1/session' && payload.data != null)
                 {
                     console.log(payload.data["actions"][0][0]["completed"]);
                     if(payload.data["actions"][0][0]["completed"])
@@ -123,19 +123,33 @@ export class UiController
                 }
             });
   }
-  public onChampLockIn()
-  {
-      //todo propper run setting logic
-      const runes = [
-          8021,
-          9111,
-          9104,
-          8014,
-          8139,
-          8135
-      ];
-      if(this.lcu != null)
+  public async onChampLockIn() {
+      if (this.lcu != null)
       {
+          //We do this to ensure the JSON is parsed correctly
+          var tempcount = JSON.stringify(await this.lcu.getRunePageCount());
+          var templist = JSON.stringify(await this.lcu.getRunePageList());
+
+          var runepagecountdata = JSON.parse(tempcount);
+          var allrunepagedata = JSON.parse(templist);
+
+          //offset of 5 for preset runes
+          if (allrunepagedata.length-5 == parseInt(runepagecountdata["ownedPageCount"]))
+          {
+              console.log("here");
+              console.log(allrunepagedata[allrunepagedata.length-6]);
+              this.lcu.deleteRunePage(allrunepagedata[allrunepagedata.length-6]["id"]);
+          }
+          //todo propper rune setting logic
+          const runes = [
+              8021,
+              9111,
+              9104,
+              8014,
+              8139,
+              8135
+          ];
+
           this.lcu.setRunePage(runes, 8000, 8100);
       }
   }

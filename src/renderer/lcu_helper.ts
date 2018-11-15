@@ -135,14 +135,14 @@ export class LcuHelper {
       await this.connection.request('POST', url, data);
   }
   /** Gets the list of runepages **/
-  public async getRunPageList(): Promise<void>
+  public async getRunePageList(): Promise<string>
   {
       const url =`/lol-perks/v1/pages`;
-      await this.connection.request('GET', url, {});
+      return await this.connection.request('GET', url, {});
   }
 
   /** Deletes one specific RunePage Given the id**/
-  public async deleteRunePagge(id: number): Promise<void>
+  public async deleteRunePage(id: number): Promise<void>
   {
       const url = `/lol-perks/v1/pages/${id}`;
       await this.connection.request('DELETE', url, {});
@@ -153,6 +153,12 @@ export class LcuHelper {
   {
       const url = '/lol-perks/v1/pages';
       await this.connection.request('DELETE', url, {});
+  }
+
+  public async getRunePageCount(): Promise<string>
+  {
+    const url = '/lol-perks/v1/inventory';
+    return await this.connection.request('GET', url, {});
   }
 
 
