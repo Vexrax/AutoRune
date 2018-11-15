@@ -126,7 +126,7 @@ export class LcuHelper {
               "isDeletable": true,
               "isEditable": true,
               "isValid": true,
-              "name": "Champion gg",
+              "name": "DB RunePage",
               "order": 1,
               "primaryStyleId": primaryRunePage,
               "selectedPerkIds": runeArray,

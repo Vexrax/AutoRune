@@ -8,6 +8,7 @@ import { IncomingInvite, LobbyData, LoginWatcher, LoginWatcherDelegate,
 import { WsConnection, WsConnectionDelegate, WsConnectionState }
     from './ws_connection';
 import { MatchedMessagePlayerInfo } from './ws_messages';
+import {ChampSelectHandler} from "./champ_select_state";
 
 export type UiControllerState =
     'lcu-offline' | 'lcu-online' | WsConnectionState;
@@ -30,6 +31,8 @@ export class UiController
   /** The URL of our WebSockets server.  */
   private readonly wsUrl: string;
 
+  private champSelectHander: ChampSelectHandler | null;
+
   constructor(vueStore: any) {  // Should be Vuex.Store.
     this.eventDispatcher = new LcuEventDispatcher();
     this.lastState = 'lcu-offline';
@@ -39,6 +42,7 @@ export class UiController
     this.wsUrl = UiController.serverWsUrl();
     this.wsConnection = new WsConnection(this.wsUrl, this);
     this.clientWatcher = new LcuClientWatcher(this.eventDispatcher);
+    this.champSelectHander = null;
 
     this.setupDebugLogging();
     this.setupChampSelectHandler();
@@ -78,7 +82,7 @@ export class UiController
         "intensity": prefs["intensity"],
         "position": prefs["position"],
         "language": prefs["language"]
-    }
+    };
     if (this.lastState !== 'ready') {
       return; 
     }
@@ -112,46 +116,10 @@ export class UiController
         this.eventDispatcher.addListener(
             'OnJsonApiEvent', (_: string, payload: any) =>
             {
-                //logic for checking if your champ is locked in.%
-                if(payload.uri === '/lol-champ-select-legacy/v1/session' && payload.data != null)
-                {
-                    console.log(payload.data["actions"][0][0]["completed"]);
-                    if(payload.data["actions"][0][0]["completed"])
-                    {
-                         this.onChampLockIn();
-                    }
-                }
+              if(this.champSelectHander != null) {
+                  this.champSelectHander.champselectListener(payload);
+              }
             });
-  }
-  public async onChampLockIn() {
-      if (this.lcu != null)
-      {
-          //We do this to ensure the JSON is parsed correctly
-          var tempcount = JSON.stringify(await this.lcu.getRunePageCount());
-          var templist = JSON.stringify(await this.lcu.getRunePageList());
-
-          var runepagecountdata = JSON.parse(tempcount);
-          var allrunepagedata = JSON.parse(templist);
-
-          //offset of 5 for preset runes
-          if (allrunepagedata.length-5 == parseInt(runepagecountdata["ownedPageCount"]))
-          {
-              console.log("here");
-              console.log(allrunepagedata[allrunepagedata.length-6]);
-              this.lcu.deleteRunePage(allrunepagedata[allrunepagedata.length-6]["id"]);
-          }
-          //todo propper rune setting logic
-          const runes = [
-              8021,
-              9111,
-              9104,
-              8014,
-              8139,
-              8135
-          ];
-
-          this.lcu.setRunePage(runes, 8000, 8100);
-      }
   }
 
   // WsConnectionDelegate
@@ -188,6 +156,7 @@ export class UiController
     // null when the state is 'offline'.
     const lcuConnection = this.loginWatcher.connection() as LcuConnection;
     this.lcu = new LcuHelper(lcuConnection);
+    this.champSelectHander = new ChampSelectHandler(this.lcu);
     this.setState(newState);
     if (newState === 'challenged') {
       this.authenticate();  // Promise intentionally ignored.
