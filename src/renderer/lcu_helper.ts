@@ -45,39 +45,6 @@ export class LcuHelper {
 
   /** Create a game lobby. */
   public async createLobby(queueId: number): Promise<void> {
-    /*const gameConfig = {
-      "allowablePremadeSizes": [
-        1,
-        2,
-        3,
-        4,
-        5
-      ],
-      "customLobbyName": "",
-      "customMutatorName": "",
-      "customRewardsDisabledReasons": [],
-      "customSpectatorPolicy": "NotAllowed",
-      "customSpectators": [],
-      "customTeam100": [],
-      "customTeam200": [],
-      "gameMode": "CLASSIC",
-      "isCustom": false,
-      "isLobbyFull": false,
-      "isTeamBuilderManaged": false,
-      "mapId": 11,
-      "maxHumanPlayers": 0,
-      "maxLobbySize": 5,
-      "maxTeamSize": 5,
-      "pickType": "",
-      "premadeSizeAllowed": true,
-      "queueId": queueId,
-      "showPositionSelector": true,
-    };
-    const lobbyData = {
-      gameConfig,
-      gameCustomization: {},
-    };*/
-
     const lobbyData = {
       "queueId": queueId,
       "canStartActivity": false,
@@ -174,5 +141,22 @@ export class LcuHelper {
       await this.connection.request('GET', url, {});
   }
 
+  /** Deletes one specific RunePage Given the id**/
+  public async deleteRunePagge(id: number): Promise<void>
+  {
+      const url = `/lol-perks/v1/pages/${id}`;
+      await this.connection.request('DELETE', url, {});
+  }
+
+  /** Delete all runepages **/
+  public async deleteAllRunePages(): Promise<void>
+  {
+      const url = '/lol-perks/v1/pages';
+      await this.connection.request('DELETE', url, {});
+  }
+
 
 }
+
+
+
