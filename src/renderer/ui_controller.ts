@@ -41,6 +41,7 @@ export class UiController
     this.clientWatcher = new LcuClientWatcher(this.eventDispatcher);
 
     this.setupDebugLogging();
+    this.setupChampSelectHandler();
   }
 
   public static serverWsUrl(): string {
@@ -106,6 +107,39 @@ export class UiController
     // OnServiceProxyMethodEvent, OnServiceProxyUuidEvent
   }
 
+  public setupChampSelectHandler(): void
+  {
+        this.eventDispatcher.addListener(
+            'OnJsonApiEvent', (_: string, payload: any) =>
+            {
+                //logic for checking if your champ is locked in.%
+                if(payload.uri === '/lol-champ-select-legacy/v1/session')
+                {
+                    console.log(payload.data["actions"][0][0]["completed"]);
+                    if(payload.data["actions"][0][0]["completed"])
+                    {
+                         this.onChampLockIn();
+                    }
+                }
+            });
+  }
+  public onChampLockIn()
+  {
+      //todo propper run setting logic
+      const runes = [
+          8021,
+          9111,
+          9104,
+          8014,
+          8139,
+          8135
+      ];
+      if(this.lcu != null)
+      {
+          this.lcu.setRunePage(runes, 8000, 8100);
+      }
+  }
+
   // WsConnectionDelegate
   public onWsStateChange(state: WsConnectionState): void {
     console.log(`WSConnection state: ${state}`);
@@ -122,6 +156,7 @@ export class UiController
       this.setupMatch();
     }
   }
+
 
   // LoginWatcherDelegate
   public async onLoginChange(state: LoginWatcherState): Promise<void> {

@@ -109,15 +109,7 @@ export class LoginWatcher {
           'OnJsonApiEvent_lol-lobby_v2_received-invitations',
           { data: payload.data });
     }
-    //logic for checking if your champ is locked in.
-    if(payload.uri === '/lol-champ-select-legacy/v1/session')
-    {
-      console.log(payload.data["actions"][0][0]["completed"]);
-      if(payload.data["actions"][0][0]["completed"])
-      {
-          //todo logic for when a champ is locked in (autoload runes)
-      }
-    }
+
   }
 
   private async updateLoginSessionFrom(connection: LcuConnection):
