@@ -42,11 +42,9 @@ export class ChampSelectHandler
             //offset of 5 for preset runes
             if (allrunepagedata.length-5 == parseInt(runepagecountdata["ownedPageCount"]))
             {
-                console.log("here");
-                console.log(allrunepagedata[allrunepagedata.length-6]);
                 this.lcu.deleteRunePage(allrunepagedata[allrunepagedata.length-6]["id"]);
             }
-            //todo fucntion for getting runes based on champion
+            //todo function for getting runes based on champion
             const runes = [
                 8021,
                 9111,
@@ -59,6 +57,10 @@ export class ChampSelectHandler
             this.lcu.setRunePage(runes, 8000, 8100);
             this.champSelectState = 'Selected';
         }
+    }
+    public async getRuneData(championName: string)
+    {
+        //todo propper implimentation
     }
 
 }
