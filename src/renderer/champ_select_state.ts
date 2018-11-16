@@ -1,7 +1,6 @@
 import {LcuHelper} from "./lcu_helper";
 
-
-export type ChampSelectState = 'Selected' | 'Not-Selected';
+type ChampSelectState = 'Selected' | 'Not-Selected';
 
 export class ChampSelectHandler
 {
@@ -60,6 +59,7 @@ export class ChampSelectHandler
     }
     public async getRuneData(championName: string)
     {
+        console.log(championName);
         //todo propper implimentation
     }
 
