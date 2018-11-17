@@ -20,5 +20,9 @@ export class champRuneStore
         return await "todo";
     }
 
+    public storeChampRunes(champkey: string, runes: number[])
+    {
+
+    }
 
 }
