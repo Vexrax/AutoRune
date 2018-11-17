@@ -5,9 +5,8 @@ import { LcuEventDispatcher } from './lcu/event_dispatcher';
 import { LcuHelper } from './lcu_helper';
 import { IncomingInvite, LobbyData, LoginWatcher, LoginWatcherDelegate,
          LoginWatcherState } from './login_watcher';
-import { WsConnection, WsConnectionDelegate, WsConnectionState }
+import { WsConnectionDelegate, WsConnectionState }
     from './ws_connection';
-import { MatchedMessagePlayerInfo } from './ws_messages';
 import {ChampSelectHandler} from "./champ_select_state";
 
 export type UiControllerState =
@@ -23,13 +22,11 @@ export class UiController
   public readonly loginWatcher: LoginWatcher;
   public readonly vueStore: any;  // Vuex.Store;
   /** Connection to our WebSockets server. */
-  public readonly wsConnection: WsConnection;
 
   private lastState: UiControllerState;
   /** Last known-good LCU connection, wrapped in an LcuHelper. */
   private lcu: LcuHelper | null;
   /** The URL of our WebSockets server.  */
-  private readonly wsUrl: string;
 
   private champSelectHander: ChampSelectHandler | null;
 
@@ -39,8 +36,6 @@ export class UiController
     this.lcu = null;
     this.loginWatcher = new LoginWatcher(this.eventDispatcher, this);
     this.vueStore = vueStore;
-    this.wsUrl = UiController.serverWsUrl();
-    this.wsConnection = new WsConnection(this.wsUrl, this);
     this.clientWatcher = new LcuClientWatcher(this.eventDispatcher);
     this.champSelectHander = null;
 
@@ -48,18 +43,6 @@ export class UiController
     this.setupChampSelectHandler();
   }
 
-  public static serverWsUrl(): string {
-    if (process.env.NODE_ENV !== 'production') {
-      // return 'ws://127.0.0.1:3000';
-      return 'ws://192.168.202.65:3000';
-    } else {
-      // TODO(pwnall): Real server?.
-      return 'wss://example.com';
-    }
-  }
-
-  /** The last reported state. */
-  public state(): UiControllerState { return this.lastState; }
 
   /** LCU connection wrapped in an LcuHelper.
    *
@@ -70,31 +53,6 @@ export class UiController
       throw new Error(`LCU connection not available while ${this.lastState}`);
     }
     return this.lcu;
-  }
-
-  public enterQueue(): void {
-    console.log(this.vueStore);
-    var prefs = this.vueStore["_modules"]["root"]["_children"]["preferences"]["state"];
-    console.log(prefs);
-    var data = {
-        "accountId": this.loginWatcher.accountId(),
-        "roles": prefs["roles"],
-        "intensity": prefs["intensity"],
-        "position": prefs["position"],
-        "language": prefs["language"]
-    };
-    if (this.lastState !== 'ready') {
-      return; 
-    }
-    
-    this.wsConnection.requestQueue(data);
-  }
-
-  public exitQueue(): void {
-    if (this.lastState !== 'queued') {
-      return;
-    }
-    this.wsConnection.cancelQueue();
   }
 
   public setupDebugLogging(): void {
@@ -130,13 +88,6 @@ export class UiController
       return;
     }
 
-    this.setState(state);
-    if (state === 'challenged') {
-      this.authenticate();  // Promise ignored intentionally.
-    }
-    if (state === 'matched') {
-      this.setupMatch();
-    }
   }
 
 
@@ -145,105 +96,21 @@ export class UiController
     console.log(`LoginWatcher state: ${state}`);
     if (state !== 'lcu-signedin') {
         this.lcu = null;
-        this.wsConnection.reset();
-        this.setState(state);
         return;
     }
 
     // When signed in, the state comes from the WebSocket connection.
-    const newState = this.wsConnection.state();
     // "as LcuConnection" is safe because loginWatcher's connection is only
     // null when the state is 'offline'.
     const lcuConnection = this.loginWatcher.connection() as LcuConnection;
     this.lcu = new LcuHelper(lcuConnection);
     this.champSelectHander = new ChampSelectHandler(this.lcu);
-    this.setState(newState);
-    if (newState === 'challenged') {
-      this.authenticate();  // Promise intentionally ignored.
-    }
-
-
   }
+
   public async onLobbyChange(lobby: LobbyData | null): Promise<void> {
-    console.log('UIC onLobbyChange');
-    console.log(lobby);
+      console.log('UIC onLobbyChange');
+      console.log(lobby);
 
-    if (this.lastState !== 'matched') {
-      return;
-    }
-    if (lobby === null) {
-      return;
-    }
-
-    // "as MatchedMessagePlayerInfo[]" is safe because the match data is not
-    // null when the state is "matched".
-    const playerInfos =
-        this.wsConnection.matchData() as MatchedMessagePlayerInfo[];
-    const summonerIds = new Set<string>();
-    for (const playerInfo of playerInfos) {
-      summonerIds.add(playerInfo.summoner_id);
-    }
-
-    // Select our roles if we still need to.
-    const ourSummonerId = this.loginWatcher.summonerId();
-    const ourMember =
-        lobby.members.find(member => member.summoner_id === ourSummonerId);
-    if (ourMember !== undefined) {
-      const hasUnselectedRole =
-          ourMember.roles.find(role => role === 'UNSELECTED') !== undefined;
-      if (hasUnselectedRole) {
-        const ourSummonerIdString = ourSummonerId.toString();
-        const ourPlayerInfo = playerInfos.find(
-            playerInfo => playerInfo.summoner_id === ourSummonerIdString);
-        if (ourPlayerInfo !== undefined) {
-          console.log('Selecting our roles');
-          for (let retryCount = 0; retryCount < 100; ++retryCount) {
-            try {
-              await this.checkedLcu().setLobbyPreferredRoles(
-                  [ourPlayerInfo.role]);
-              break;
-            } catch (lcuError) {
-              console.error('LCU error while inviting');
-              console.error(lcuError);
-            }
-          }
-        }
-      }
-    }
-
-    // The first player starts the game after everyone selected roles.
-    const firstPlayer = playerInfos[0];
-    const ourAccountId = this.loginWatcher.accountId();
-    if (firstPlayer.account_id !== ourAccountId.toString()) {
-      return;
-    }
-
-    // Check if all needed players have selected roles.
-    for (const member of lobby.members) {
-      const summonerId = member.summoner_id.toString();
-      if (!summonerIds.has(summonerId)) {
-        continue;
-      }
-
-      const hasUnselectedRole =
-          member.roles.find(role => role === 'UNSELECTED') !== undefined;
-      if (hasUnselectedRole) {
-        return;
-      }
-    }
-
-    // Check if all needed players have accepted invitations.
-    for (const invite of lobby.invites) {
-      if (invite.state !== 'Accepted') {
-        // TODO(pwnall): Bail and reset if the invite state is Declined.
-        continue;
-      }
-      const summonerId = invite.summoner_id.toString();
-      summonerIds.delete(summonerId);
-    }
-    if (summonerIds.size === 0) {
-      this.checkedLcu().startLobbyMatch();
-    }
   }
   public async onIncomingInvitesChange(invites: IncomingInvite[]):
       Promise<void> {
@@ -252,78 +119,5 @@ export class UiController
     if (this.lastState !== 'matched') {
       return;
     }
-    await this.acceptMatchInviteIfPending();
-  }
-
-  private async authenticate(): Promise<void> {
-    const accountId = this.loginWatcher.accountId().toString();
-    const summonerId = this.loginWatcher.summonerId().toString();
-
-    const token = this.wsConnection.token();
-    await this.checkedLcu().setVerificationToken(summonerId, token as string);
-
-    this.wsConnection.sendAuth(accountId, summonerId);
-  }
-
-  private async acceptMatchInviteIfPending(): Promise<void> {
-    // "as MatchedMessagePlayerInfo[]" is safe because the match data is not
-    // null when the state is "matched".
-    const playerInfos =
-        this.wsConnection.matchData() as MatchedMessagePlayerInfo[];
-    const firstPlayer = playerInfos[0];
-    // LCU only deals with integer IDs.
-    const firstPlayerSummonerId = parseInt(firstPlayer.summoner_id, 10);
-
-    for (const invite of this.loginWatcher.invites()) {
-      if (invite.summoner_id !== firstPlayerSummonerId ||
-          invite.state === 'Accepted') {
-        continue;
-      }
-
-      await this.checkedLcu().acceptLobbyInvite(invite.invitation_id);
-      return;
-    }
-  }
-
-  private async setupMatch(): Promise<void> {
-    console.log('In setup match');
-    const playerInfos = this.wsConnection.matchData();
-    if (playerInfos === null || playerInfos.length === 0) {
-      throw new Error('No match available');
-    }
-
-    // Only the first player is responsible for setting up the game.
-    const firstPlayer = playerInfos[0];
-    const ourAccountId = this.loginWatcher.accountId();
-    if (firstPlayer.account_id !== ourAccountId.toString()) {
-      await this.acceptMatchInviteIfPending();
-      return;
-    }
-
-    // Actually set up the match.
-    const lcu = this.checkedLcu();
-    await lcu.createLobby(400);  // 400 is draft, 430 is blind.
-
-    // Invite players to the lobby.
-    for (const playerInfo of playerInfos) {
-      // LCU only deals with integers, so this had better be an integer.
-      const accountId = parseInt(playerInfo.account_id, 10);
-      if (accountId === ourAccountId) {
-        continue;
-      }
-      const summonerId = parseInt(playerInfo.summoner_id, 10);
-      await lcu.sendLobbyInvite(summonerId, playerInfo.summoner_name);
-    }
-  }
-
-  /** FSM update logic. */
-  private setState(state: UiControllerState): void {
-    if (this.lastState === state) {
-      return;
-    }
-
-    this.lastState = state;
-    console.log(['UIController', state]);
-    this.vueStore.commit('lcu/setStatus', state);
   }
 }
