@@ -5,7 +5,9 @@ import { LcuEventDispatcher } from './lcu/event_dispatcher';
 import { LcuHelper } from './lcu_helper';
 import { IncomingInvite, LobbyData, LoginWatcher, LoginWatcherDelegate,
          LoginWatcherState } from './login_watcher';
-import { WsConnectionDelegate, WsConnectionState }
+import {
+     WsConnectionDelegate, WsConnectionState
+}
     from './ws_connection';
 import {ChampSelectHandler} from "./champ_select_state";
 
@@ -22,6 +24,7 @@ export class UiController
   public readonly loginWatcher: LoginWatcher;
   public readonly vueStore: any;  // Vuex.Store;
   /** Connection to our WebSockets server. */
+
 
   private lastState: UiControllerState;
   /** Last known-good LCU connection, wrapped in an LcuHelper. */
@@ -48,13 +51,6 @@ export class UiController
    *
    * This throws an exception if the LCU client is not signed in.
    */
-  public checkedLcu(): LcuHelper {
-    if (this.lcu === null) {
-      throw new Error(`LCU connection not available while ${this.lastState}`);
-    }
-    return this.lcu;
-  }
-
   public setupDebugLogging(): void {
     this.eventDispatcher.addListener(
         'OnJsonApiEvent', (_: string, payload: any) => {
@@ -96,14 +92,18 @@ export class UiController
     console.log(`LoginWatcher state: ${state}`);
     if (state !== 'lcu-signedin') {
         this.lcu = null;
+        this.setState(state);
         return;
     }
 
     // When signed in, the state comes from the WebSocket connection.
     // "as LcuConnection" is safe because loginWatcher's connection is only
     // null when the state is 'offline'.
+
     const lcuConnection = this.loginWatcher.connection() as LcuConnection;
     this.lcu = new LcuHelper(lcuConnection);
+    this.setState('lcu-online');
+
     this.champSelectHander = new ChampSelectHandler(this.lcu);
   }
 
@@ -120,4 +120,12 @@ export class UiController
       return;
     }
   }
+  private setState(state: UiControllerState): void {
+    if (this.lastState === state) {
+        return;
+    }
+      this.lastState = state;
+      console.log(['UIController', state]);
+      this.vueStore.commit('lcu/setStatus', state);
+    }
 }

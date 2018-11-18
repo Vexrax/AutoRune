@@ -16,33 +16,6 @@ export class LcuHelper {
     await this.connection.request('PUT', url, token);
   }
 
-  /** Creates a notification in the League clinet (LCU). */
-  public async postNotification(expiresInMs: (number | null) = null):
-      Promise<number> {
-    const now = Date.now();
-    const expires: string = (expiresInMs === null) ?
-        '' : new Date(now + expiresInMs).toISOString();
-    const notificationData = {
-      backgroundUrl: '',
-      created: (new Date()).toISOString(),
-      critical: true,
-      data: { mission_title: 'Figure Out LCU' },
-      detailKey: 'new_mission_details',
-      dismissible: true,
-      expires,
-      iconUrl: 'https://www.google.com/chrome/static/images/chrome-logo.svg',
-      id: 0,
-      source: '',
-      state: 'unread',
-      titleKey: 'new_mission_title',
-      type: 'mission',
-    };
-    const newNotification = await this.connection.request(
-        'POST', '/player-notifications/v1/notifications', notificationData);
-    const notificationId: number = newNotification.id;
-    return notificationId;
-  }
-
   /** Create a game lobby. */
   public async createLobby(queueId: number): Promise<void> {
     const lobbyData = {
