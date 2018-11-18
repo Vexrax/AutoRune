@@ -17,7 +17,7 @@
     },
     'ready': {
       main: 'Profile loaded and ready to begin!',
-      sub: 'Set your matchmaking preferences and queue up!',
+      sub: 'Runes are ready to be autoloaded!',
       level: 'success',
     }
   };

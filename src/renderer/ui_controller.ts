@@ -90,6 +90,7 @@ export class UiController
   // LoginWatcherDelegate
   public async onLoginChange(state: LoginWatcherState): Promise<void> {
     console.log(`LoginWatcher state: ${state}`);
+    console.log(`login state change to: ${state}`);
     if (state !== 'lcu-signedin') {
         this.lcu = null;
         this.setState(state);
@@ -102,7 +103,7 @@ export class UiController
 
     const lcuConnection = this.loginWatcher.connection() as LcuConnection;
     this.lcu = new LcuHelper(lcuConnection);
-    this.setState('lcu-online');
+    this.setState('ready');
 
     this.champSelectHander = new ChampSelectHandler(this.lcu);
   }

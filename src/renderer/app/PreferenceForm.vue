@@ -14,7 +14,6 @@
     Slider,
   } from 'element-ui';
   import { intensities, positions, roles } from './lol_preferences';
-  import { languages } from './languages';
   import lang from 'element-ui/lib/locale/lang/en';
   import locale from 'element-ui/lib/locale';
   import QueueButton from './QueueButton';
@@ -39,7 +38,6 @@
     },
     data () {
       return {
-        languages,
         positions,
         roles,
       };
@@ -84,14 +82,6 @@
         set(value) {
           this.$store.commit('preferences/setSecondaryPosition', value);
         },
-      },
-    },
-    methods: {
-      intensityLabel: function (intensity) {
-        return intensities[intensity / 25];
-      },
-      sortByEnglishName: function (languages) {
-        return languages.slice().sort((a, b) => a['englishName'].localeCompare(b['englishName']));
       },
     },
   }
@@ -197,8 +187,6 @@
           :key="language['locale']"
           :label="language['englishName']"
           :value="language['locale']">
-          <span class="en">{{ language['englishName'] }}</span>
-          <span class="native">{{ language['nativeName'] }}</span>
         </el-option>
       </el-select>
     </el-form-item>
