@@ -12,7 +12,7 @@
     },
     'lcu-online': {
       main: 'League of Legends client is online',
-      sub: 'Sign into the League of Legends application.',
+        sub: 'Sign into the League of Legends application.',
       level: 'info',
     },
     'ready': {

@@ -10,6 +10,7 @@
   import { store } from './store';
   import FlowStatus from './FlowStatus';
   import PreferenceForm from './PreferenceForm';
+  import ChampGridForm from './ChampGridForm'
 
   Vue.use(Container);
   Vue.use(Footer);
@@ -22,6 +23,7 @@
     components: {
       FlowStatus,
       PreferenceForm,
+        ChampGridForm,
     },
     store,
     data() {
@@ -69,20 +71,23 @@ body {
 
 <template>
   <el-container :style="{ background: overlayCss + ', url(' + backgroundImageUrl + ') center/cover' }">
+
     <el-header>
       <el-row type="flex" justify="center">
-        <h1>Ohai</h1>
+        <h1>AutoRune</h1>
       </el-row>
     </el-header>
+
     <el-main>
       <div v-if="connectedToServer">
         <el-row type="flex" justify="center">
-          <preference-form></preference-form>
+          <champ-grid-form></champ-grid-form>
         </el-row>
       </div>
       <div v-else>
       </div>
     </el-main>
+
     <el-footer>
       <flow-status></flow-status>
     </el-footer>

@@ -45,9 +45,40 @@ const preferences = {
   },
 };
 
+const runes =
+{
+    state: {
+        Name: null,
+        KeystoneTree: null,
+        SecondaryTree: null,
+        Runes: []
+    },
+    mutations: {
+        setRunes( state: any, listOfRunes: number[])
+        {
+            state.Runes =  listOfRunes
+        },
+        SetKeystoneTree(state: any, treenumber: number)
+        {
+          state.KeystoneTree = treenumber;
+        },
+        SetSecondaryTree(state: any, treenumber: number)
+        {
+            state.SecondaryTree = treenumber;
+        },
+        SetName(state: any, name: string)
+        {
+            state.Name = name;
+        }
+    }
+};
+
+
 export const store = new Vuex.Store({
   modules: {
     lcu,
     preferences,
+      runes,
   },
 });
+
