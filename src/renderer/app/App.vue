@@ -6,6 +6,7 @@
     Header,
     Main,
     Row,
+      Aside
   } from 'element-ui';
   import { store } from './store';
   import FlowStatus from './FlowStatus';
@@ -17,6 +18,7 @@
   Vue.use(Header);
   Vue.use(Main);
   Vue.use(Row);
+  Vue.use(Aside);
 
   export default {
     name: 'app',
@@ -70,7 +72,11 @@ body {
 </style>
 
 <template>
+
   <el-container :style="{ background: overlayCss + ', url(' + backgroundImageUrl + ') center/cover' }">
+    <el-aside style="width: 200px;">
+
+    </el-aside>
 
     <el-header>
       <el-row type="flex" justify="center">
@@ -79,13 +85,9 @@ body {
     </el-header>
 
     <el-main>
-      <div v-if="connectedToServer">
         <el-row type="flex" justify="center">
           <champ-grid-form></champ-grid-form>
         </el-row>
-      </div>
-      <div v-else>
-      </div>
     </el-main>
 
     <el-footer>
