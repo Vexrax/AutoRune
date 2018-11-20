@@ -12,6 +12,7 @@
   import FlowStatus from './FlowStatus';
   import PreferenceForm from './PreferenceForm';
   import ChampGridForm from './ChampGridForm'
+      import ElContainer from "element-ui/packages/container/src/main";
 
   Vue.use(Container);
   Vue.use(Footer);
@@ -23,7 +24,8 @@
   export default {
     name: 'app',
     components: {
-      FlowStatus,
+        ElContainer,
+        FlowStatus,
       PreferenceForm,
         ChampGridForm,
     },
@@ -68,31 +70,37 @@ body {
   > .el-container {
     height: 100%;
   }
+  .el-aside {
+    background-color: white;
+    opacity: 0.7;
+    text-align: center;
+    line-height: 200px;
+  }
 }
 </style>
 
 <template>
 
   <el-container :style="{ background: overlayCss + ', url(' + backgroundImageUrl + ') center/cover' }">
-    <el-aside style="width: 200px;">
+    <el-aside style="width: 200px;"></el-aside>
+    <el-container>
+      <el-header>
 
-    </el-aside>
-
-    <el-header>
-      <el-row type="flex" justify="center">
-        <h1>AutoRune</h1>
-      </el-row>
-    </el-header>
-
-    <el-main>
         <el-row type="flex" justify="center">
-          <champ-grid-form></champ-grid-form>
+          <h1>AutoRune</h1>
         </el-row>
-    </el-main>
+      </el-header>
 
-    <el-footer>
-      <flow-status></flow-status>
-    </el-footer>
+      <el-main>
+          <el-row type="flex" justify="center">
+            <champ-grid-form></champ-grid-form>
+          </el-row>
+      </el-main>
+
+      <el-footer>
+        <flow-status></flow-status>
+      </el-footer>
+      </el-container>
   </el-container>
 </template>
 

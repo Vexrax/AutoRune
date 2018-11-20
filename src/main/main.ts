@@ -1,4 +1,3 @@
-//const LCU = require("JavaScript/LCU");
 import { app, BrowserWindow, Menu } from 'electron';
 const url = require("url");
 const path = require("path");
@@ -11,14 +10,15 @@ let mainWindow: BrowserWindow | null = null;
 
 function createMainWindow(): BrowserWindow {
     const window = new BrowserWindow();
-
+    window.setAutoHideMenuBar(true);
+    window.setMinimumSize(1200, 600);
     if (isDevelopment) {
         window.webContents.openDevTools({mode: 'undocked'});
         window.loadURL(
             `http://localhost:${process.env.ELECTRON_WEBPACK_WDS_PORT}`);
     } else {
         window.loadURL(url.format({
-            pathname: path.join(__dirname, 'index.html'),
+            pathname: path.join(__dirname, 'HTML/index.html'),
             protocol: 'file',
             slashes: true,
         }));
