@@ -13,6 +13,7 @@
   import PreferenceForm from './PreferenceForm';
   import ChampGridForm from './ChampGridForm'
       import ElContainer from "element-ui/packages/container/src/main";
+      import RuneSelectorForm from "./RuneSelectorForm";
 
   Vue.use(Container);
   Vue.use(Footer);
@@ -24,6 +25,7 @@
   export default {
     name: 'app',
     components: {
+        RuneSelectorForm,
         ElContainer,
         FlowStatus,
       PreferenceForm,
@@ -76,6 +78,7 @@ body {
     text-align: center;
     line-height: 50px;
   }
+
 }
 
 ul {
@@ -109,23 +112,26 @@ li a:hover {
   <el-container :style="{ background: overlayCss + ', url(' + backgroundImageUrl + ') center/cover' }">
     <el-aside style="width: 200px;">
       <ul>
-        <li><a style="border-bottom: 1px solid #555; line-height: 70px;">Home</a></li>
-        <li><a>Runes</a></li>
+        <li><a style="border-bottom: 1px solid #555; line-height: 59px;">Home</a></li>
+        <li><a>My Runes</a></li>
+        <li><a>Auto Runes</a></li>
         <li><a>Social</a></li>
-        <li><a>About</a></li>
+        <li><a>Remote</a></li>
       </ul>
     </el-aside>
     <el-container>
       <el-header>
-
         <el-row type="flex" justify="center">
           <h1>AutoRune</h1>
         </el-row>
       </el-header>
 
       <el-main>
-          <el-row type="flex" justify="center">
+          <el-row type="flex" >
             <champ-grid-form></champ-grid-form>
+            <el-row type="flex" justify="center">
+              <rune-selector-form></rune-selector-form>
+            </el-row>
           </el-row>
       </el-main>
 
