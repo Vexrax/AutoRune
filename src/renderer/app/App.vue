@@ -74,15 +74,47 @@ body {
     background-color: white;
     opacity: 0.7;
     text-align: center;
-    line-height: 200px;
+    line-height: 50px;
   }
 }
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  background-color: #f1f1f1;
+}
+
+li a {
+  display: block;
+  color: #000;
+  text-decoration: none;
+}
+
+/* Change the link color on hover */
+li a:hover {
+  background-color: #555;
+  color: white;
+}
+
+.active {
+  color: white;
+}
+
 </style>
 
 <template>
 
   <el-container :style="{ background: overlayCss + ', url(' + backgroundImageUrl + ') center/cover' }">
-    <el-aside style="width: 200px;"></el-aside>
+    <el-aside style="width: 200px;">
+      <ul>
+        <li><a style="border-bottom: 1px solid #555; line-height: 70px;">Home</a></li>
+        <li><a>Runes</a></li>
+        <li><a>Social</a></li>
+        <li><a>About</a></li>
+      </ul>
+    </el-aside>
     <el-container>
       <el-header>
 
