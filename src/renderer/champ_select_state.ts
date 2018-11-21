@@ -50,7 +50,10 @@ export class ChampSelectHandler
                 9104,
                 8014,
                 8139,
-                8135
+                8135,
+                5007,
+                5002,
+                5001
             ];
 
             this.lcu.setRunePage(runes, 8000, 8100);
