@@ -51,19 +51,8 @@
         <img src="../icons/Jinx.png">
         <img src="../icons/Jinx.png">
         <img src="../icons/Jinx.png">
-        <img src="../icons/Jinx.png">
     </div>
     <div class="row">
-        <img src="../icons/Jinx.png">
-        <img src="../icons/Jinx.png">
-        <img src="../icons/Jinx.png">
-        <img src="../icons/Jinx.png">
-        <img src="../icons/Jinx.png">
-        <img src="../icons/Jinx.png">
-        <img src="../icons/Jinx.png">
-    </div>
-    <div class="row">
-        <img src="../icons/Jinx.png">
         <img src="../icons/Jinx.png">
         <img src="../icons/Jinx.png">
         <img src="../icons/Jinx.png">
@@ -78,6 +67,13 @@
         <img src="../icons/Jinx.png">
         <img src="../icons/Jinx.png">
         <img src="../icons/Jinx.png">
+    </div>
+    <div class="row">
+        <img src="../icons/Jinx.png">
+        <img src="../icons/Jinx.png">
+        <img src="../icons/Jinx.png">
+        <img src="../icons/Jinx.png">
+        <img src="../icons/Jinx.png">
         <img src="../icons/Jinx.png">
     </div>
     <div class="row">
@@ -87,10 +83,16 @@
         <img src="../icons/Jinx.png">
         <img src="../icons/Jinx.png">
         <img src="../icons/Jinx.png">
-        <img src="../icons/Jinx.png">
     </div>
     <div class="row">
         <img src="../icons/Jinx.png">
+        <img src="../icons/Jinx.png">
+        <img src="../icons/Jinx.png">
+        <img src="../icons/Jinx.png">
+        <img src="../icons/Jinx.png">
+        <img src="../icons/Jinx.png">
+    </div>
+    <div class="row">
         <img src="../icons/Jinx.png">
         <img src="../icons/Jinx.png">
         <img src="../icons/Jinx.png">
@@ -106,7 +108,6 @@
 <style scoped>
     .row {
         display: flex;
-        flex-wrap: wrap;
         padding: 0 4px;
     }
 
@@ -120,7 +121,7 @@
     @media screen and (max-width: 800px) {
         .row {
             flex: 50%;
-            max-width: 50%;
+            max-width: 60%;
         }
     }
 

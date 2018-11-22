@@ -127,9 +127,14 @@ li a:hover {
       </el-header>
 
       <el-main>
-          <el-row type="flex" >
-            <champ-grid-form></champ-grid-form>
+          <el-row type="flex">
+            <el-container>
+              <el-row type="flex" justify="center">
+                <champ-grid-form></champ-grid-form>
+              </el-row>
+            </el-container>
             <el-row type="flex" justify="center">
+              <rune-selector-form></rune-selector-form>
               <rune-selector-form></rune-selector-form>
             </el-row>
           </el-row>
