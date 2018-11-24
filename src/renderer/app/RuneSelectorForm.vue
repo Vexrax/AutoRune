@@ -36,6 +36,14 @@
                     return "background-color: black ;";
                 }
                 return "background-color: #181818;";
+            },
+            SecondaryTreeBackGroundColor: function(TreeId)
+            {
+                if(TreeId === this.$store.state.runes.SecondaryTree)
+                {
+                    return "background-color: black ;";
+                }
+                return "background-color: #181818;";
             }
 
 
@@ -110,11 +118,11 @@
         </div>
         <div class="runeContainer">
             <div class="row">
-                <img src="../icons/runes/8000.png" v-on:click="SetTree(0, false)"/>
-                <img src="../icons/runes/8100.png" v-on:click="SetTree(1, false)"/>
-                <img src="../icons/runes/8200.png" v-on:click="SetTree(2, false)"/>
-                <img src="../icons/runes/8300.png" v-on:click="SetTree(3, false)"/>
-                <img src="../icons/runes/8400.png" v-on:click="SetTree(4, false)"/>
+                <img src="../icons/runes/8000.png" v-on:click="SetTree(0, false)" v-bind:style="SecondaryTreeBackGroundColor(0)"/>
+                <img src="../icons/runes/8100.png" v-on:click="SetTree(1, false)" v-bind:style="SecondaryTreeBackGroundColor(1)"/>
+                <img src="../icons/runes/8200.png" v-on:click="SetTree(2, false)" v-bind:style="SecondaryTreeBackGroundColor(2)"/>
+                <img src="../icons/runes/8300.png" v-on:click="SetTree(3, false)" v-bind:style="SecondaryTreeBackGroundColor(3)"/>
+                <img src="../icons/runes/8400.png" v-on:click="SetTree(4, false)" v-bind:style="SecondaryTreeBackGroundColor(4)"/>
             </div>
             <div class="runerow" id="row1_2">
                 <img class="rune" v-for="img in SecondaryTreeRowOne" v-bind:src="img['icon']" v-bind:id="img['id']"/>

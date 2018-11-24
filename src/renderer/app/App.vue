@@ -10,7 +10,6 @@
   } from 'element-ui';
   import { store } from './store';
   import FlowStatus from './FlowStatus';
-  import PreferenceForm from './PreferenceForm';
   import ChampGridForm from './ChampGridForm'
   import ElContainer from "element-ui/packages/container/src/main";
   import RuneSelectorForm from "./RuneSelectorForm";
@@ -28,7 +27,6 @@
         RuneSelectorForm,
         ElContainer,
         FlowStatus,
-      PreferenceForm,
         ChampGridForm,
     },
     store,
