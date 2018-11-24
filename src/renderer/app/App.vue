@@ -1,5 +1,5 @@
 <script>
-      import Vue from 'vue';
+  import Vue from 'vue';
   import {
     Container,
     Footer,
@@ -12,8 +12,8 @@
   import FlowStatus from './FlowStatus';
   import PreferenceForm from './PreferenceForm';
   import ChampGridForm from './ChampGridForm'
-      import ElContainer from "element-ui/packages/container/src/main";
-      import RuneSelectorForm from "./RuneSelectorForm";
+  import ElContainer from "element-ui/packages/container/src/main";
+  import RuneSelectorForm from "./RuneSelectorForm";
 
   Vue.use(Container);
   Vue.use(Footer);
@@ -57,8 +57,12 @@
           return this.disconnectedImageUrl;
         }
       },
+
+
     }
   }
+
+
 </script>
 
 <style lang="scss">
@@ -112,11 +116,11 @@ li a:hover {
   <el-container :style="{ background: overlayCss + ', url(' + backgroundImageUrl + ') center/cover' }">
     <el-aside style="width: 200px;">
       <ul>
-        <li><a style="border-bottom: 1px solid #555; line-height: 59px;">Home</a></li>
-        <li><a>My Runes</a></li>
-        <li><a>Auto Runes</a></li>
-        <li><a>Social</a></li>
-        <li><a>Remote</a></li>
+        <li id="Home"><a style="border-bottom: 1px solid #555; line-height: 59px;">Home</a></li>
+        <li id="MyRunes"><a>My Runes</a></li>
+        <li id="AutoRunes"><a>Auto Runes</a></li>
+        <li id="Social"><a>Social</a></li>
+        <li id="Remote"><a>Remote</a></li>
       </ul>
     </el-aside>
     <el-container>
@@ -130,7 +134,6 @@ li a:hover {
           <el-row type="flex">
             <champ-grid-form></champ-grid-form>
             <el-row type="flex" justify="center">
-              <rune-selector-form></rune-selector-form>
               <rune-selector-form></rune-selector-form>
             </el-row>
           </el-row>

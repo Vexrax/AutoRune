@@ -11,6 +11,7 @@ let mainWindow: BrowserWindow | null = null;
 function createMainWindow(): BrowserWindow {
     const window = new BrowserWindow();
     window.setAutoHideMenuBar(true);
+    window.setTitle("AutoRune");
     window.setMinimumSize(1200, 600);
     if (isDevelopment) {
         window.webContents.openDevTools({mode: 'undocked'});

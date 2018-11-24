@@ -74,6 +74,7 @@ const runes =
 };
 
 
+
 export const store = new Vuex.Store({
   modules: {
     lcu,

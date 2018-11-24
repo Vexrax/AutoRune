@@ -128,5 +128,6 @@ export class UiController
       this.lastState = state;
       console.log(['UIController', state]);
       this.vueStore.commit('lcu/setStatus', state);
-    }
+      //this.vueStore["_modules"]["root"]["_children"]["preferences"]["state"] saving for later
+  }
 }
