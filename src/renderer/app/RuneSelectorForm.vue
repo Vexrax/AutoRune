@@ -85,16 +85,16 @@
             </div>
 
             <div class="runerow" id="row1">
-                <img class="rune" v-for="img in KeyStoneRowOneJSON" v-bind:src="img['icon']" />
+                <img class="rune" v-for="img in KeyStoneRowOneJSON" v-bind:src="img['icon']" v-bind:id="img['id']"/>
             </div>
             <div class="runerow" id="row2">
-                <img class="rune" v-for="img in KeyStoneRowTwoJSON" v-bind:src="img['icon']" />
+                <img class="rune" v-for="img in KeyStoneRowTwoJSON" v-bind:src="img['icon']" v-bind:id="img['id']"/>
             </div>
             <div class="runerow" id="row3">
-                <img class="rune" v-for="img in KeyStoneRowThreeJSON" v-bind:src="img['icon']" />
+                <img class="rune" v-for="img in KeyStoneRowThreeJSON" v-bind:src="img['icon']" v-bind:id="img['id']"/>
             </div>
             <div class="runerow" id="row4">
-                <img class="rune" v-for="img in KeyStoneRowFourJSON" v-bind:src="img['icon']" />
+                <img class="rune" v-for="img in KeyStoneRowFourJSON" v-bind:src="img['icon']" v-bind:id="img['id']"/>
             </div>
         </div>
         <div class="runeContainer">
@@ -106,13 +106,13 @@
                 <img src="../icons/runes/8400.png" v-on:click="SetTree(4, false)"/>
             </div>
             <div class="runerow" id="row1_2">
-                <img class="rune" v-for="img in SecondaryTreeRowOne" v-bind:src="img['icon']" />
+                <img class="rune" v-for="img in SecondaryTreeRowOne" v-bind:src="img['icon']" v-bind:id="img['id']"/>
             </div>
             <div class="runerow" id="row2_2">
-                <img class="rune" v-for="img in SecondaryTreeRowTwo" v-bind:src="img['icon']" />
+                <img class="rune" v-for="img in SecondaryTreeRowTwo" v-bind:src="img['icon']" v-bind:id="img['id']"/>
             </div>
             <div class="runerow" id="row3_2">
-                <img class="rune" v-for="img in SecondaryTreeRowThree" v-bind:src="img['icon']" />
+                <img class="rune" v-for="img in SecondaryTreeRowThree" v-bind:src="img['icon']" v-bind:id="img['id']"/>
             </div>
         </div>
     </el-container>
