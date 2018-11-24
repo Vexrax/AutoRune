@@ -3,23 +3,27 @@
 
     export default {
         components: {ElContainer},
-        name: "rune-selector-form"
-    }
-    function ShowRunesTree(TreeId)
-    {
+        name: "rune-selector-form",
+        methods: {
+            ShowRunesTree: function(TreeId, isPrimary)
+            {
+                console.log("Tree " + TreeId + " " + isPrimary );
+            }
 
+        }
     }
+
 </script>
 
 <template>
     <el-container>
         <div class="runeContainer">
             <div class="row">
-                <img src="../icons/runes/8000.png" onclick="ShowRunes(1)"/>
-                <img src="../icons/runes/8100.png" onclick="ShowRunes(2)"/>
-                <img src="../icons/runes/8200.png" onclick="ShowRunes(3)"/>
-                <img src="../icons/runes/8300.png" onclick="ShowRunes(4)"/>
-                <img src="../icons/runes/8400.png" onclick="ShowRunes(5)"/>
+                <img src="../icons/runes/8000.png" v-on:click="ShowRunesTree(1,true)"/>
+                <img src="../icons/runes/8100.png" v-on:click="ShowRunesTree(2,true)"/>
+                <img src="../icons/runes/8200.png" v-on:click="ShowRunesTree(3,true)"/>
+                <img src="../icons/runes/8300.png" v-on:click="ShowRunesTree(4,true)"/>
+                <img src="../icons/runes/8400.png" v-on:click="ShowRunesTree(5,true)"/>
             </div>
             <div class="row" id="row1">
 
@@ -36,11 +40,11 @@
         </div>
         <div class="runeContainer">
             <div class="row">
-                <img src="../icons/runes/8000.png" onclick="ShowRunes(1)"/>
-                <img src="../icons/runes/8100.png" onclick="ShowRunes(2)"/>
-                <img src="../icons/runes/8200.png" onclick="ShowRunes(3)"/>
-                <img src="../icons/runes/8300.png" onclick="ShowRunes(4)"/>
-                <img src="../icons/runes/8400.png" onclick="ShowRunes(5)"/>
+                <img src="../icons/runes/8000.png" v-on:click="ShowRunesTree(1, false)"/>
+                <img src="../icons/runes/8100.png" v-on:click="ShowRunesTree(2, false)"/>
+                <img src="../icons/runes/8200.png" v-on:click="ShowRunesTree(3, false)"/>
+                <img src="../icons/runes/8300.png" v-on:click="ShowRunesTree(4, false)"/>
+                <img src="../icons/runes/8400.png" v-on:click="ShowRunesTree(5, false)"/>
             </div>
             <div class="row" id="row1_2">
 
@@ -51,11 +55,9 @@
             <div class="row" id="row3_2">
 
             </div>
-            <div class="row" id="row4_2">
-
-            </div>
         </div>
     </el-container>
+
 </template>
 
 <style scoped>
