@@ -27,35 +27,45 @@
                     this.$store.commit('runes/SetSecondaryTree', TreeId);
                 }
                 console.log(RuneJson);
-                console.log(this.$store.state.runes.state);
+                console.log(this.$store.state.runes.KeystoneTree);
             }
         },
         computed:{
-            //todo Set it so that it isnt hardcoded to persicion tree
             KeyStoneRowOneJSON()
             {
-                const tree = 0;
+                const tree = this.$store.state.runes.KeystoneTree;
                 return RuneJson[tree]["slots"][0]["runes"];
             },
             KeyStoneRowTwoJSON()
             {
-                const tree = 0;
+                const tree = this.$store.state.runes.KeystoneTree;
                 return RuneJson[tree]["slots"][1]["runes"];
             },
             KeyStoneRowThreeJSON()
             {
-                const tree = 0;
+                const tree = this.$store.state.runes.KeystoneTree;
                 return RuneJson[tree]["slots"][2]["runes"];
             },
             KeyStoneRowFourJSON()
             {
-                const tree = 0;
+                const tree = this.$store.state.runes.KeystoneTree;
                 return RuneJson[tree]["slots"][3]["runes"];
             },
-            KeyStone(data)
+            SecondaryTreeRowOne()
             {
-
-            }
+                const tree = this.$store.state.runes.SecondaryTree;
+                return RuneJson[tree]["slots"][1]["runes"];
+            },
+            SecondaryTreeRowTwo()
+            {
+                const tree = this.$store.state.runes.SecondaryTree;
+                return RuneJson[tree]["slots"][2]["runes"];
+            },
+            SecondaryTreeRowThree()
+            {
+                const tree = this.$store.state.runes.SecondaryTree;
+                return RuneJson[tree]["slots"][3]["runes"];
+            },
 
         }
     }
@@ -95,14 +105,14 @@
                 <img src="../icons/runes/8300.png" v-on:click="SetTree(3, false)"/>
                 <img src="../icons/runes/8400.png" v-on:click="SetTree(4, false)"/>
             </div>
-            <div class="row" id="row1_2">
-
+            <div class="runerow" id="row1_2">
+                <img class="rune" v-for="img in SecondaryTreeRowOne" v-bind:src="img['icon']" />
             </div>
-            <div class="row" id="row2_2">
-
+            <div class="runerow" id="row2_2">
+                <img class="rune" v-for="img in SecondaryTreeRowTwo" v-bind:src="img['icon']" />
             </div>
-            <div class="row" id="row3_2">
-
+            <div class="runerow" id="row3_2">
+                <img class="rune" v-for="img in SecondaryTreeRowThree" v-bind:src="img['icon']" />
             </div>
         </div>
     </el-container>
