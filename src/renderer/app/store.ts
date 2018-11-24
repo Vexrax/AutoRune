@@ -50,8 +50,8 @@ const runes =
     namespaced: true,
     state: {
         Name: null,
-        KeystoneTree: null,
-        SecondaryTree: null,
+        KeystoneTree: 0,
+        SecondaryTree: 1,
         Runes: []
     },
     mutations: {

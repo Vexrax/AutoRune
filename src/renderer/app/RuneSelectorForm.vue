@@ -26,9 +26,19 @@
                 else{
                     this.$store.commit('runes/SetSecondaryTree', TreeId);
                 }
-                console.log(RuneJson);
-                console.log(this.$store.state.runes.KeystoneTree);
+
+            },
+
+            KeyStoneBackGroundColor: function(TreeId)
+            {
+                if(TreeId === this.$store.state.runes.KeystoneTree)
+                {
+                    return "background-color: black ;";
+                }
+                return "background-color: #181818;";
             }
+
+
         },
         computed:{
             KeyStoneRowOneJSON()
@@ -67,6 +77,7 @@
                 return RuneJson[tree]["slots"][3]["runes"];
             },
 
+
         }
     }
 
@@ -77,11 +88,11 @@
     <el-container>
         <div class="runeContainer">
             <div class="row">
-                <img src="../icons/runes/8000.png" v-on:click="SetTree(0,true)"/>
-                <img src="../icons/runes/8100.png" v-on:click="SetTree(1,true)"/>
-                <img src="../icons/runes/8200.png" v-on:click="SetTree(2,true)"/>
-                <img src="../icons/runes/8300.png" v-on:click="SetTree(3,true)"/>
-                <img src="../icons/runes/8400.png" v-on:click="SetTree(4,true)"/>
+                <img src="../icons/runes/8000.png" v-on:click="SetTree(0,true)" v-bind:style="KeyStoneBackGroundColor(0)"/>
+                <img src="../icons/runes/8100.png" v-on:click="SetTree(1,true)" v-bind:style="KeyStoneBackGroundColor(1)"/>
+                <img src="../icons/runes/8200.png" v-on:click="SetTree(2,true)" v-bind:style="KeyStoneBackGroundColor(2)"/>
+                <img src="../icons/runes/8300.png" v-on:click="SetTree(3,true)" v-bind:style="KeyStoneBackGroundColor(3)"/>
+                <img src="../icons/runes/8400.png" v-on:click="SetTree(4,true)" v-bind:style="KeyStoneBackGroundColor(4)"/>
             </div>
 
             <div class="runerow" id="row1">
@@ -131,9 +142,9 @@
 }
 
 .row {
-    display: inline-flex;
+    display: flex;
     flex-wrap: wrap;
-    padding: 0 4px;
+    padding: 0 0px;
 
 }
 
@@ -162,13 +173,10 @@
 
 
 .row img {
-    margin-top: 8px;
     vertical-align: middle;
     width: 26px;
     height: 26px;
-
-    padding-left: 8px;
-    padding-right: 8px;
+    padding: 8px;
 }
 
     
