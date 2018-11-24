@@ -47,6 +47,7 @@ const preferences = {
 
 const runes =
 {
+    namespaced: true,
     state: {
         Name: null,
         KeystoneTree: null,
@@ -72,7 +73,6 @@ const runes =
         }
     }
 };
-
 
 
 export const store = new Vuex.Store({
