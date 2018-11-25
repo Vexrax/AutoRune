@@ -199,9 +199,7 @@
             </div>
             <div class="savecontainer">
                 <el-form>
-                    <el-form-item>
                         <el-button type="primary">Save Runes</el-button>
-                    </el-form-item>
                 </el-form>
             </div>
         </div>
@@ -253,7 +251,6 @@
     background-color: #181818;
     opacity: 0.7;
     display: flex;
-    flex-wrap: wrap;
     padding: 0 0px;
 
 }

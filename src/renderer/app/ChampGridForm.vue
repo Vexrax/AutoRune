@@ -1,9 +1,24 @@
 <script>
     import Vue from 'vue';
     import { MenuItemGroup } from 'element-ui';
+    import ChampJson from '../staticJSONs/champion'
+
+
 
     export default {
         name: 'champion-grid-form',
+        data() {
+            return {
+                ChampData: ChampJson,
+            }
+        },
+        methods:{
+            getLocalChampImages: function(id)
+            {
+                return 'http://ddragon.leagueoflegends.com/cdn/8.23.1/img/champion/' + id + '.png'
+                //return './../icons/' + id + '.png' //todo need to switch these to local data files.
+            }
+        },
         computed: {
             runes: {
                 get() {
@@ -43,64 +58,9 @@
 </script>
 
 <template>
-<div>
     <div class="row">
-        <img src="../icons/Jinx.png">
-        <img src="../icons/Jinx.png">
-        <img src="../icons/Jinx.png">
-        <img src="../icons/Jinx.png">
-        <img src="../icons/Jinx.png">
-        <img src="../icons/Jinx.png">
+        <img v-for="data in ChampData['data']" v-bind:src="getLocalChampImages(data['id'])">
     </div>
-    <div class="row">
-        <img src="../icons/Jinx.png">
-        <img src="../icons/Jinx.png">
-        <img src="../icons/Jinx.png">
-        <img src="../icons/Jinx.png">
-        <img src="../icons/Jinx.png">
-        <img src="../icons/Jinx.png">
-    </div>
-    <div class="row">
-        <img src="../icons/Jinx.png">
-        <img src="../icons/Jinx.png">
-        <img src="../icons/Jinx.png">
-        <img src="../icons/Jinx.png">
-        <img src="../icons/Jinx.png">
-        <img src="../icons/Jinx.png">
-    </div>
-    <div class="row">
-        <img src="../icons/Jinx.png">
-        <img src="../icons/Jinx.png">
-        <img src="../icons/Jinx.png">
-        <img src="../icons/Jinx.png">
-        <img src="../icons/Jinx.png">
-        <img src="../icons/Jinx.png">
-    </div>
-    <div class="row">
-        <img src="../icons/Jinx.png">
-        <img src="../icons/Jinx.png">
-        <img src="../icons/Jinx.png">
-        <img src="../icons/Jinx.png">
-        <img src="../icons/Jinx.png">
-        <img src="../icons/Jinx.png">
-    </div>
-    <div class="row">
-        <img src="../icons/Jinx.png">
-        <img src="../icons/Jinx.png">
-        <img src="../icons/Jinx.png">
-        <img src="../icons/Jinx.png">
-        <img src="../icons/Jinx.png">
-        <img src="../icons/Jinx.png">
-    </div>
-    <div class="row">
-        <img src="../icons/Jinx.png">
-        <img src="../icons/Jinx.png">
-        <img src="../icons/Jinx.png">
-        <img src="../icons/Jinx.png">
-        <img src="../icons/Jinx.png">
-        <img src="../icons/Jinx.png">
-    </div>
-</div>
 </template>
 
 
@@ -109,6 +69,7 @@
     .row {
         display: flex;
         padding: 0 4px;
+        flex-wrap: wrap;
     }
 
     .row img {
