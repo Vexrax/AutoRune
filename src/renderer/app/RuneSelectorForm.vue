@@ -1,12 +1,16 @@
 <script>
-    import Vue from 'vue';
     import ElContainer from "element-ui/packages/container/src/main";
     import RuneJson from '../staticJSONs/RuneData'
 
+    /** Constant Strings **/
+    const SelectedRuneStyleColor = "background-color: black ;";
+    const DefaultRuneStyleColor = "background-color: #181818;";
+    const GreyIconExtensionURL = '?image=e_grayscale&v=1';
+
+    /** Maticies For Runes (Unsaved to JSON) **/
     var KeyStoneMatrix = [-1, -1, -1, -1];
     var SecondaryTreeMatrix = [-1, -1, -1];
     var selectedSecondaryRunes = 0;
-
 
     export default {
         components: {ElContainer},
@@ -37,17 +41,17 @@
             {
                 if(TreeId === this.$store.state.runes.KeystoneTree)
                 {
-                    return "background-color: black ;";
+                    return SelectedRuneStyleColor;
                 }
-                return "background-color: #181818;";
+                return DefaultRuneStyleColor;
             },
             SecondaryTreeBackGroundColor: function(TreeId)
             {
                 if(TreeId === this.$store.state.runes.SecondaryTree)
                 {
-                    return "background-color: black ;";
+                    return SelectedRuneStyleColor;
                 }
-                return "background-color: #181818;";
+                return DefaultRuneStyleColor;
             },
             IsRuneSelected: function(id, isKeyStone)
             {
@@ -55,7 +59,7 @@
                 {
                     return '';
                 }
-                return '?image=e_grayscale&v=1';
+                return GreyIconExtensionURL;
             },
             onRuneClick: function(id, row, isKeyStone)
             {
