@@ -80,8 +80,9 @@
                         selectedSecondaryRunes -= 1;
                         return;
                     }
-                    if(selectedSecondaryRunes <= 1) //you can only have 2 secondary runes 
+                    if(selectedSecondaryRunes <= 1) //you can only have 2 secondary runes
                     {
+                        //todo check if the rune is on the same row and ignore this if statement if it is.
                         SecondaryTreeMatrix[row] = id;
                         selectedSecondaryRunes += 1;
                     }
