@@ -1,23 +1,38 @@
 <script>
     import ElContainer from "element-ui/packages/container/src/main";
     import RuneJson from '../staticJSONs/RuneData'
+    import ShardJson from '../staticJSONs/RuneStats'
+    import ElForm from "element-ui/packages/form/src/form";
+    import ElButton from "element-ui/packages/button/src/button";
+    import 'element-ui/lib/theme-chalk/index.css';
+
 
     /** Constant Strings **/
     const SelectedRuneStyleColor = "background-color: black ;";
     const DefaultRuneStyleColor = "background-color: #181818;";
     const GreyIconExtensionURL = '?image=e_grayscale&v=1';
+    const StatsShardPath = "http://opgg-static.akamaized.net/images/lol/perkShard/";
 
     /** Maticies For Runes (Unsaved to JSON) **/
     var KeyStoneMatrix = [-1, -1, -1, -1];
     var SecondaryTreeMatrix = [-1, -1, -1];
+    var ShardMatrix = [-1, -1, -1];
     var selectedSecondaryRunes = 0;
 
+    /** Update Objects**/
+    var componentObj = 0;
+
     export default {
-        components: {ElContainer},
+        components: {
+            ElButton,
+            ElForm,
+            ElContainer},
         data() {
             return {
                 RuneData: RuneJson,
-                componentKey: 0,
+                ShardData: ShardJson,
+                componentKey: componentObj,
+                StatsShardPath: StatsShardPath
             }
         },
         methods: {
@@ -93,6 +108,19 @@
                 }
                 //used to force re-render since vue doesnt auto re-render methods.
                 this.componentKey += 1;
+            },
+            OnShardClick: function(id, row)
+            {
+                ShardMatrix[row] = id;
+                this.$forceUpdate();
+            },
+            IsShardSelected: function(id, row)
+            {
+                if(ShardMatrix[row] === id)
+                {
+                    return '';
+                }
+                return GreyIconExtensionURL;
             }
 
         },
@@ -132,6 +160,11 @@
                 const tree = this.$store.state.runes.SecondaryTree;
                 return RuneJson[tree]["slots"][3]["runes"];
             },
+            ShardSlots()
+            {
+                console.log(ShardJson);
+                return ShardJson["slots"];
+            },
 
 
         }
@@ -164,6 +197,13 @@
                     <img class="rune" v-for="img in KeyStoneRowFourJSON" v-bind:src="img['icon'] + IsRuneSelected(img['id'], true)" v-bind:id="img['id']" v-on:click="onRuneClick(img['id'], 3, true)"/>
                 </div>
             </div>
+            <div class="savecontainer">
+                <el-form>
+                    <el-form-item>
+                        <el-button type="primary">Save Runes</el-button>
+                    </el-form-item>
+                </el-form>
+            </div>
         </div>
         <div class="runeContainer">
             <div class="row">
@@ -182,7 +222,20 @@
             <div class="runerow" id="row3_2">
                 <img class="rune" v-for="img in SecondaryTreeRowThree" v-bind:src="img['icon'] + IsRuneSelected(img['id'], false)" v-bind:id="img['id']" v-on:click="onRuneClick(img['id'], 2, false)"/>
             </div>
+            <div class="statshardcontainer">
+                <div class ="runerow">
+                    <img class="rune" v-for="runes in ShardSlots[0]" v-bind:src="StatsShardPath + runes + '.png' + IsShardSelected(runes, 0)" v-on:click="OnShardClick(runes, 0)"/>
+                </div>
+                <div class ="runerow">
+                    <img class="rune" v-for="runes in ShardSlots[1]" v-bind:src="StatsShardPath + runes + '.png' + IsShardSelected(runes, 1)" v-on:click="OnShardClick(runes, 1)"/>
+                </div>
+                <div class ="runerow">
+                    <img class="rune" v-for="runes in ShardSlots[2]" v-bind:src="StatsShardPath + runes + '.png' + IsShardSelected(runes, 2)" v-on:click="OnShardClick(runes, 2)"/>
+                </div>
+            </div>
+
         </div>
+
     </el-container>
 
 </template>
@@ -190,8 +243,6 @@
 <style scoped>
 
 .runeContainer {
-    background-color: #181818;
-    opacity: 0.7;
     width: 100%;
     height: fit-content;
     margin-top: 30px;
@@ -199,6 +250,8 @@
 }
 
 .row {
+    background-color: #181818;
+    opacity: 0.7;
     display: flex;
     flex-wrap: wrap;
     padding: 0 0px;
@@ -207,6 +260,7 @@
 
 .runerow{
     display: flex;
+    opacity: 0.7;
     padding: 0 4px;
     background-color: black;
 
@@ -228,12 +282,20 @@
 
 }
 
-
 .row img {
     vertical-align: middle;
     width: 26px;
     height: 26px;
     padding: 8px;
+}
+
+.savecontainer{
+    margin-top: 20px;
+}
+
+.statshardcontainer
+{
+    margin-top: 10px;
 }
 
     
