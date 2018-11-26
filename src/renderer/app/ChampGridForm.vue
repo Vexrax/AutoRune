@@ -99,8 +99,6 @@
         border: 3px solid #05060a;
         border-radius: 50%;
 
-
-
     }
     /* Responsive layout - makes a two row-layout instead of four columns */
     @media screen and (max-width: 800px) {
