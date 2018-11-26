@@ -6,18 +6,11 @@
     import ElButton from "element-ui/packages/button/src/button";
     import 'element-ui/lib/theme-chalk/index.css';
 
-
     /** Constant Strings **/
     const SelectedRuneStyleColor = "background-color: black ;";
     const DefaultRuneStyleColor = "background-color: #181818;";
     const GreyIconExtensionURL = '?image=e_grayscale&v=1';
     const StatsShardPath = "http://opgg-static.akamaized.net/images/lol/perkShard/";
-
-    /** Maticies For Runes (Unsaved to JSON) **/
-    var KeyStoneMatrix = [-1, -1, -1, -1];
-    var SecondaryTreeMatrix = [-1, -1, -1];
-    var ShardMatrix = [-1, -1, -1];
-    var selectedSecondaryRunes = 0;
 
     /** Update Objects**/
     var componentObj = 0;
@@ -41,13 +34,15 @@
                 if(isPrimary){
                     this.$store.commit('runes/SetKeystoneTree', TreeId);
                     //reset the selected tree matrix
-                    KeyStoneMatrix = [-1, -1, -1, -1];
+                    this.$store.commit('tempRuneMatrix/ResetKeyStoneMatrix');
+                    //KeyStoneMatrix = [-1, -1, -1, -1];
                 }
                 else{
                     this.$store.commit('runes/SetSecondaryTree', TreeId);
                     //reset the selected tree matrix
-                    SecondaryTreeMatrix = [-1, -1, -1];
-                    selectedSecondaryRunes = 0;
+                    this.$store.commit('tempRuneMatrix/ResetSecondaryMatrix');
+                    //SecondaryTreeMatrix = [-1, -1, -1];
+                    //selectedSecondaryRunes = 0;
                 }
 
             },
@@ -70,7 +65,7 @@
             },
             IsRuneSelected: function(id, isKeyStone)
             {
-                if((KeyStoneMatrix.includes(id) && isKeyStone) || (SecondaryTreeMatrix.includes(id) && !isKeyStone))
+                if((this.$store.state.tempRuneMatrix.KeyStoneMatrix.includes(id) && isKeyStone) || (this.$store.state.tempRuneMatrix.SecondaryTreeMatrix.includes(id) && !isKeyStone))
                 {
                     return '';
                 }
@@ -81,29 +76,29 @@
                 if(isKeyStone)
                 {
                     //if selected unselect rune
-                    if(KeyStoneMatrix.includes(id))
+                    if(this.$store.state.tempRuneMatrix.KeyStoneMatrix.includes(id))
                     {
-                        KeyStoneMatrix[row] = -1;
+                        this.$store.commit('tempRuneMatrix/SetKeyStoneMatrix', { "row": row, "id": -1}); //we use jsons because mutations only accept 2 params including state
                         this.componentKey += 1;
                         return;
                     }
-                    KeyStoneMatrix[row] = id;
+                    this.$store.commit('tempRuneMatrix/SetKeyStoneMatrix',  { "row": row, "id": id}); //we use jsons because mutations only accept 2 params including state
                 }
                 else
                 {
                     //if selected unselect rune
-                    if(SecondaryTreeMatrix.includes(id))
+                    if(this.$store.state.tempRuneMatrix.SecondaryTreeMatrix.includes(id))
                     {
-                        SecondaryTreeMatrix[row] = -1;
+                        this.$store.commit('tempRuneMatrix/SetSecondaryTreeMatrix', { "row": row, "id": -1}); //we use jsons because mutations only accept 2 params including state
                         this.componentKey += 1;
-                        selectedSecondaryRunes -= 1;
+                        this.$store.commit('tempRuneMatrix/SubtractSelectedSecondaryRunes');
                         return;
                     }
-                    if(selectedSecondaryRunes <= 1) //you can only have 2 secondary runes
+                    if(this.$store.state.tempRuneMatrix.selectedSecondaryRunes <= 1) //you can only have 2 secondary runes
                     {
                         //todo check if the rune is on the same row and ignore this if statement if it is.
-                        SecondaryTreeMatrix[row] = id;
-                        selectedSecondaryRunes += 1;
+                        this.$store.commit('tempRuneMatrix/SetSecondaryTreeMatrix', { "row": row, "id": id});
+                        this.$store.commit('tempRuneMatrix/AddSelectedSecondaryRunes');
                     }
                 }
                 //used to force re-render since vue doesnt auto re-render methods.
@@ -111,12 +106,12 @@
             },
             OnShardClick: function(id, row)
             {
-                ShardMatrix[row] = id;
+                this.$store.commit('tempRuneMatrix/SetShardMatrix', { "row": row, "id": id}); //we use jsons because mutations only accept 2 params including state
                 this.$forceUpdate();
             },
             IsShardSelected: function(id, row)
             {
-                if(ShardMatrix[row] === id)
+                if(this.$store.state.tempRuneMatrix.ShardMatrix[row] === id)
                 {
                     return '';
                 }

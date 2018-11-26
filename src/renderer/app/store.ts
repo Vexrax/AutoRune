@@ -74,12 +74,68 @@ const runes =
     }
 };
 
+const tempRuneMatrix =
+    {
+      namespaced: true,
+      state: {
+          KeyStoneMatrix: [-1, -1, -1, -1],
+          SecondaryTreeMatrix: [-1, -1, -1],
+          ShardMatrix: [-1, -1, -1],
+          selectedSecondaryRunes: 0,
+      },
+      mutations: {
+          SetKeyStoneMatrix(state: any, payload: any)
+          {
+              state.KeyStoneMatrix[payload['row']] = payload['id']
+          },
+          SetSecondaryTreeMatrix(state: any, payload: any)
+          {
+              state.SecondaryTreeMatrix[payload['row']] = payload['id']
+          },
+          SetShardMatrix(state: any, payload: any)
+          {
+              state.ShardMatrix[payload['row']] = payload['id'];
+          },
+          AddSelectedSecondaryRunes(state: any)
+          {
+              state.selectedSecondaryRunes += 1;
+          },
+          SubtractSelectedSecondaryRunes(state: any)
+          {
+              state.selectedSecondaryRunes -= 1;
+          },
+          ResetAllMatricies(state: any)
+          {
+              state.KeyStoneMatrix = [-1, -1, -1, -1];
+              state.SecondaryTreeMatrix =  [-1, -1, -1];
+              state.ShardMatrix =  [-1, -1, -1];
+              state.selectedSecondaryRunes = 0;
+          },
+          ResetKeyStoneMatrix(state: any)
+          {
+              state.KeyStoneMatrix = [-1, -1, -1, -1];
+          },
+          ResetSecondaryMatrix(state: any)
+          {
+              state.SecondaryTreeMatrix =  [-1, -1, -1];
+              state.selectedSecondaryRunes = 0;
+
+          },
+          ResetShardMatrix(state: any)
+          {
+              state.ShardMatrix =  [-1, -1, -1];
+          },
+      }
+
+    };
+
 
 export const store = new Vuex.Store({
   modules: {
     lcu,
     preferences,
       runes,
+      tempRuneMatrix
   },
 });
 
