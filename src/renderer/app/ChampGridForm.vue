@@ -3,6 +3,8 @@
     import { MenuItemGroup } from 'element-ui';
     import ChampJson from '../staticJSONs/champion'
 
+    /** Client Side Vars **/
+    var CurrentChampSelected = '';
 
 
     export default {
@@ -17,7 +19,20 @@
             {
                 return 'http://ddragon.leagueoflegends.com/cdn/8.23.1/img/champion/' + id + '.png'
                 //return './../icons/' + id + '.png' //todo need to switch these to local data files.
-            }
+            },
+            onIconClick: function(id)
+            {
+                CurrentChampSelected = id;
+                this.$forceUpdate();
+            },
+            GetChampSelectedStyleData: function(id)
+            {
+                if(id === CurrentChampSelected)
+                {
+                    return "border-radius: 0%; border: 3px solid #00dd16;"
+                }
+                return '';
+            },
         },
         computed: {
             runes: {
@@ -53,13 +68,15 @@
                 },
             },
 
+
+
         },
     }
 </script>
 
 <template>
     <div class="row">
-        <img v-for="data in ChampData['data']" v-bind:src="getLocalChampImages(data['id'])">
+        <img v-for="data in ChampData['data']" v-bind:src="getLocalChampImages(data['id'])" v-on:click="onIconClick(data['id'])" v-bind:style="GetChampSelectedStyleData(data['id'])">
     </div>
 </template>
 
@@ -75,8 +92,15 @@
     .row img {
         margin-top: 8px;
         vertical-align: middle;
+        margin-left: 2px;
+        margin-right: 2px;
         max-width: 70px;
         max-height: 70px;
+        border: 3px solid #05060a;
+        border-radius: 50%;
+
+
+
     }
     /* Responsive layout - makes a two row-layout instead of four columns */
     @media screen and (max-width: 800px) {
