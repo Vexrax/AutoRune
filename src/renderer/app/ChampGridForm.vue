@@ -23,6 +23,7 @@
             onIconClick: function(id)
             {
                 CurrentChampSelected = id;
+                this.$store.commit('tempRuneMatrix/ResetAllMatricies');
                 this.$forceUpdate();
             },
             GetChampSelectedStyleData: function(id)
