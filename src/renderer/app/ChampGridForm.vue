@@ -24,6 +24,7 @@
             {
                 CurrentChampSelected = id;
                 this.$store.commit('tempRuneMatrix/ResetAllMatricies');
+                this.$store.commit('tempRuneMatrix/SetChampName', id);
                 this.$forceUpdate();
             },
             GetChampSelectedStyleData: function(id)

@@ -45,87 +45,76 @@ const preferences = {
   },
 };
 
-const runes =
-{
+const runes = {
     namespaced: true,
     state: {
         Name: null,
         KeystoneTree: 0,
         SecondaryTree: 1,
-        Runes: []
+        Runes: [],
     },
     mutations: {
-        setRunes( state: any, listOfRunes: number[])
-        {
-            state.Runes =  listOfRunes
+        setRunes(state: any, listOfRunes: number[]) {
+            state.Runes =  listOfRunes;
         },
-        SetKeystoneTree(state: any, treenumber: number)
-        {
+        SetKeystoneTree(state: any, treenumber: number) {
           state.KeystoneTree = treenumber;
         },
-        SetSecondaryTree(state: any, treenumber: number)
-        {
+        SetSecondaryTree(state: any, treenumber: number) {
             state.SecondaryTree = treenumber;
         },
-        SetName(state: any, name: string)
-        {
+        SetName(state: any, name: string) {
             state.Name = name;
-        }
-    }
+        },
+    },
 };
 
-const tempRuneMatrix =
-    {
+const tempRuneMatrix = {
       namespaced: true,
       state: {
+          ChampName: null,
           KeyStoneMatrix: [-1, -1, -1, -1],
           SecondaryTreeMatrix: [-1, -1, -1],
           ShardMatrix: [-1, -1, -1],
           selectedSecondaryRunes: 0,
       },
       mutations: {
-          SetKeyStoneMatrix(state: any, payload: any)
-          {
-              state.KeyStoneMatrix[payload['row']] = payload['id']
+          SetKeyStoneMatrix(state: any, payload: any) {
+              state.KeyStoneMatrix[payload.row] = payload.id;
           },
-          SetSecondaryTreeMatrix(state: any, payload: any)
-          {
-              state.SecondaryTreeMatrix[payload['row']] = payload['id']
+          SetSecondaryTreeMatrix(state: any, payload: any) {
+              state.SecondaryTreeMatrix[payload.row] = payload.id;
           },
-          SetShardMatrix(state: any, payload: any)
-          {
-              state.ShardMatrix[payload['row']] = payload['id'];
+          SetShardMatrix(state: any, payload: any) {
+              state.ShardMatrix[payload.row] = payload.id;
           },
-          AddSelectedSecondaryRunes(state: any)
-          {
+          AddSelectedSecondaryRunes(state: any) {
               state.selectedSecondaryRunes += 1;
           },
-          SubtractSelectedSecondaryRunes(state: any)
-          {
+          SubtractSelectedSecondaryRunes(state: any) {
               state.selectedSecondaryRunes -= 1;
           },
-          ResetAllMatricies(state: any)
-          {
+          ResetAllMatricies(state: any) {
               state.KeyStoneMatrix = [-1, -1, -1, -1];
               state.SecondaryTreeMatrix =  [-1, -1, -1];
               state.ShardMatrix =  [-1, -1, -1];
               state.selectedSecondaryRunes = 0;
           },
-          ResetKeyStoneMatrix(state: any)
-          {
+          ResetKeyStoneMatrix(state: any) {
               state.KeyStoneMatrix = [-1, -1, -1, -1];
           },
-          ResetSecondaryMatrix(state: any)
-          {
+          ResetSecondaryMatrix(state: any) {
               state.SecondaryTreeMatrix =  [-1, -1, -1];
               state.selectedSecondaryRunes = 0;
 
           },
-          ResetShardMatrix(state: any)
-          {
+          ResetShardMatrix(state: any) {
               state.ShardMatrix =  [-1, -1, -1];
           },
-      }
+          SetChampName(state: any, name: string) {
+            state.ChampName = name;
+            },
+      },
 
     };
 
@@ -135,7 +124,7 @@ export const store = new Vuex.Store({
     lcu,
     preferences,
       runes,
-      tempRuneMatrix
+      tempRuneMatrix,
   },
 });
 
