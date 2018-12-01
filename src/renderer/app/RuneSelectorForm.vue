@@ -1,16 +1,24 @@
 <script>
     import ElContainer from "element-ui/packages/container/src/main";
-    import RuneJson from '../staticJSONs/RuneData'
-    import ShardJson from '../staticJSONs/RuneStats'
     import ElForm from "element-ui/packages/form/src/form";
     import ElButton from "element-ui/packages/button/src/button";
     import 'element-ui/lib/theme-chalk/index.css';
+
+    /** Static jsons **/
+    import RuneJson from '../staticJSONs/RuneData'
+    import ShardJson from '../staticJSONs/RuneStats'
+
+    /** Rune Data from previous sessions **/
+    import LocalRunes from '../DynamicJSONS/ChampRunes'
 
     /** Constant Strings **/
     const SelectedRuneStyleColor = "background-color: black ;";
     const DefaultRuneStyleColor = "background-color: #181818;";
     const GreyIconExtensionURL = '?image=e_grayscale&v=1';
     const StatsShardPath = "http://opgg-static.akamaized.net/images/lol/perkShard/";
+    const LocalPathToRunes = "../DynamicJSONS/ChampRunes.json"; //todo set this to a variable thats installed
+
+    var JsonSaveType = 'text/plain';
 
     /** Update Objects**/
     var componentObj = 0;
@@ -24,6 +32,7 @@
             return {
                 RuneData: RuneJson,
                 ShardData: ShardJson,
+                LocalRuneData: LocalRunes,
                 componentKey: componentObj,
                 StatsShardPath: StatsShardPath
             }
@@ -50,6 +59,16 @@
             {
                 var champID = this.$store.state.tempRuneMatrix.ChampName;
 
+                //todo validation before saving.
+                LocalRunes[champID] = {}; //Ensure The Key is in the JSON
+                LocalRunes[champID]["PrimaryTree"] = RuneJson[this.$store.state.tempRuneMatrix.KeystoneTree]['id']; //convert our internal values to the 8000 series
+                LocalRunes[champID]["SecondaryTree"] = RuneJson[this.$store.state.tempRuneMatrix.SecondaryTree]['id'];  //convert our internal values to the 8000 series
+                LocalRunes[champID]["PrimaryMatrix"] = this.$store.state.tempRuneMatrix.KeyStoneMatrix;
+                LocalRunes[champID]["SecondaryMatrix"] = this.$store.state.tempRuneMatrix.SecondaryTreeMatrix;
+                LocalRunes[champID]["ShardMatrix"] = this.$store.state.tempRuneMatrix.ShardMatrix;
+
+                console.log(LocalRunes);
+                //todo save to JSON
             },
 
             KeyStoneBackGroundColor: function(TreeId)
@@ -199,7 +218,7 @@
             </div>
             <div class="savecontainer">
                 <el-form>
-                        <el-button type="primary" v-bind:click="OnSaveRunes">Save Runes</el-button>
+                        <el-button type="primary" v-on:click="OnSaveRunes()">Save Runes</el-button>
                 </el-form>
             </div>
         </div>
