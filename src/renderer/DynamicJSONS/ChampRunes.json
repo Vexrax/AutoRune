@@ -1,0 +1,10 @@
+{
+  "Jinx":
+  {
+    "PrimaryTree": 8100,
+    "SecondaryTree": 8200,
+    "PrimaryMatrix": [],
+    "SecondaryMatrix": [],
+    "ShardMatrix": []
+  }
+}

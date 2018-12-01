@@ -32,13 +32,13 @@
             SetTree: function(TreeId, isPrimary)
             {
                 if(isPrimary){
-                    this.$store.commit('runes/SetKeystoneTree', TreeId);
+                    this.$store.commit('tempRuneMatrix/SetKeystoneTree', TreeId);
                     //reset the selected tree matrix
                     this.$store.commit('tempRuneMatrix/ResetKeyStoneMatrix');
                     //KeyStoneMatrix = [-1, -1, -1, -1];
                 }
                 else{
-                    this.$store.commit('runes/SetSecondaryTree', TreeId);
+                    this.$store.commit('tempRuneMatrix/SetSecondaryTree', TreeId);
                     //reset the selected tree matrix
                     this.$store.commit('tempRuneMatrix/ResetSecondaryMatrix');
                     //SecondaryTreeMatrix = [-1, -1, -1];
@@ -46,10 +46,15 @@
                 }
 
             },
+            OnSaveRunes: function()
+            {
+                var champID = this.$store.state.tempRuneMatrix.ChampName;
+
+            },
 
             KeyStoneBackGroundColor: function(TreeId)
             {
-                if(TreeId === this.$store.state.runes.KeystoneTree)
+                if(TreeId === this.$store.state.tempRuneMatrix.KeystoneTree)
                 {
                     return SelectedRuneStyleColor;
                 }
@@ -57,7 +62,7 @@
             },
             SecondaryTreeBackGroundColor: function(TreeId)
             {
-                if(TreeId === this.$store.state.runes.SecondaryTree)
+                if(TreeId === this.$store.state.tempRuneMatrix.SecondaryTree)
                 {
                     return SelectedRuneStyleColor;
                 }
@@ -122,37 +127,37 @@
         computed:{
             KeyStoneRowOneJSON()
             {
-                const tree = this.$store.state.runes.KeystoneTree;
+                const tree = this.$store.state.tempRuneMatrix.KeystoneTree;
                 return RuneJson[tree]["slots"][0]["runes"];
             },
             KeyStoneRowTwoJSON()
             {
-                const tree = this.$store.state.runes.KeystoneTree;
+                const tree = this.$store.state.tempRuneMatrix.KeystoneTree;
                 return RuneJson[tree]["slots"][1]["runes"];
             },
             KeyStoneRowThreeJSON()
             {
-                const tree = this.$store.state.runes.KeystoneTree;
+                const tree = this.$store.state.tempRuneMatrix.KeystoneTree;
                 return RuneJson[tree]["slots"][2]["runes"];
             },
             KeyStoneRowFourJSON()
             {
-                const tree = this.$store.state.runes.KeystoneTree;
+                const tree = this.$store.state.tempRuneMatrix.KeystoneTree;
                 return RuneJson[tree]["slots"][3]["runes"];
             },
             SecondaryTreeRowOne()
             {
-                const tree = this.$store.state.runes.SecondaryTree;
+                const tree = this.$store.state.tempRuneMatrix.SecondaryTree;
                 return RuneJson[tree]["slots"][1]["runes"];
             },
             SecondaryTreeRowTwo()
             {
-                const tree = this.$store.state.runes.SecondaryTree;
+                const tree = this.$store.state.tempRuneMatrix.SecondaryTree;
                 return RuneJson[tree]["slots"][2]["runes"];
             },
             SecondaryTreeRowThree()
             {
-                const tree = this.$store.state.runes.SecondaryTree;
+                const tree = this.$store.state.tempRuneMatrix.SecondaryTree;
                 return RuneJson[tree]["slots"][3]["runes"];
             },
             ShardSlots()
@@ -194,7 +199,7 @@
             </div>
             <div class="savecontainer">
                 <el-form>
-                        <el-button type="primary">Save Runes</el-button>
+                        <el-button type="primary" v-bind:click="OnSaveRunes">Save Runes</el-button>
                 </el-form>
             </div>
         </div>

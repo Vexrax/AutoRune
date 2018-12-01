@@ -45,34 +45,12 @@ const preferences = {
   },
 };
 
-const runes = {
-    namespaced: true,
-    state: {
-        Name: null,
-        KeystoneTree: 0,
-        SecondaryTree: 1,
-        Runes: [],
-    },
-    mutations: {
-        setRunes(state: any, listOfRunes: number[]) {
-            state.Runes =  listOfRunes;
-        },
-        SetKeystoneTree(state: any, treenumber: number) {
-          state.KeystoneTree = treenumber;
-        },
-        SetSecondaryTree(state: any, treenumber: number) {
-            state.SecondaryTree = treenumber;
-        },
-        SetName(state: any, name: string) {
-            state.Name = name;
-        },
-    },
-};
-
 const tempRuneMatrix = {
       namespaced: true,
       state: {
           ChampName: null,
+          KeystoneTree: 0,
+          SecondaryTree: 1,
           KeyStoneMatrix: [-1, -1, -1, -1],
           SecondaryTreeMatrix: [-1, -1, -1],
           ShardMatrix: [-1, -1, -1],
@@ -114,6 +92,12 @@ const tempRuneMatrix = {
           SetChampName(state: any, name: string) {
             state.ChampName = name;
             },
+          SetKeystoneTree(state: any, treenumber: number) {
+              state.KeystoneTree = treenumber;
+          },
+          SetSecondaryTree(state: any, treenumber: number) {
+              state.SecondaryTree = treenumber;
+          },
       },
 
     };
@@ -123,7 +107,6 @@ export const store = new Vuex.Store({
   modules: {
     lcu,
     preferences,
-      runes,
       tempRuneMatrix,
   },
 });
