@@ -59,7 +59,24 @@
             {
                 var champID = this.$store.state.tempRuneMatrix.ChampName;
 
-                //todo validation before saving.
+                if(this.$store.state.tempRuneMatrix.KeystoneTree === this.$store.state.tempRuneMatrix.SecondaryTree) //make sure the rune trees are different
+                {
+                    //todo post some error to UI
+                    console.log("Primary and secondary tree IDS are the same\n");
+                    console.log("Primary: " + this.$store.state.tempRuneMatrix.KeystoneTree);
+                    console.log("Secondary: " + this.$store.state.tempRuneMatrix.SecondaryTree);
+                    return;
+                }
+                if(this.$store.state.tempRuneMatrix.KeyStoneMatrix.includes(-1) || this.$store.state.tempRuneMatrix.ShardMatrix.includes(-1)) //Make Sure Runes are all selected
+                {
+                    //todo: post some error to UI
+                    console.log("Missing a Rune Selection\n" + this.$store.state.tempRuneMatrix.KeyStoneMatrix + "\n"
+                        + this.$store.state.tempRuneMatrix.SecondaryTreeMatrix + "\n"
+                        + this.$store.state.tempRuneMatrix.ShardMatrix);
+                    return;
+                }
+
+
                 LocalRunes[champID] = {}; //Ensure The Key is in the JSON
                 LocalRunes[champID]["PrimaryTree"] = RuneJson[this.$store.state.tempRuneMatrix.KeystoneTree]['id']; //convert our internal values to the 8000 series
                 LocalRunes[champID]["SecondaryTree"] = RuneJson[this.$store.state.tempRuneMatrix.SecondaryTree]['id'];  //convert our internal values to the 8000 series
