@@ -18,7 +18,8 @@
             getLocalChampImages: function(id)
             {
                 return 'http://ddragon.leagueoflegends.com/cdn/8.23.1/img/champion/' + id + '.png'
-                //return './../icons/' + id + '.png' //todo need to switch these to local data files.
+                //return './../icons/' + id + '.png'
+                // todo need to switch these to local data files.
             },
             onIconClick: function(id)
             {

@@ -57,7 +57,7 @@
             },
             OnSaveRunes: function()
             {
-                var champID = this.$store.state.tempRuneMatrix.ChampName;
+                const champID = this.$store.state.tempRuneMatrix.ChampName;
 
                 if(this.$store.state.tempRuneMatrix.KeystoneTree === this.$store.state.tempRuneMatrix.SecondaryTree) //make sure the rune trees are different
                 {
@@ -67,6 +67,7 @@
                     console.log("Secondary: " + this.$store.state.tempRuneMatrix.SecondaryTree);
                     return;
                 }
+
                 if(this.$store.state.tempRuneMatrix.KeyStoneMatrix.includes(-1) || this.$store.state.tempRuneMatrix.ShardMatrix.includes(-1)) //Make Sure Runes are all selected
                 {
                     //todo: post some error to UI
@@ -205,8 +206,6 @@
 
         }
     }
-
-
 </script>
 
 <template>
