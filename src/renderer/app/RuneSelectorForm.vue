@@ -44,14 +44,11 @@
                     this.$store.commit('tempRuneMatrix/SetKeystoneTree', TreeId);
                     //reset the selected tree matrix
                     this.$store.commit('tempRuneMatrix/ResetKeyStoneMatrix');
-                    //KeyStoneMatrix = [-1, -1, -1, -1];
                 }
                 else{
                     this.$store.commit('tempRuneMatrix/SetSecondaryTree', TreeId);
                     //reset the selected tree matrix
                     this.$store.commit('tempRuneMatrix/ResetSecondaryMatrix');
-                    //SecondaryTreeMatrix = [-1, -1, -1];
-                    //selectedSecondaryRunes = 0;
                 }
 
             },
