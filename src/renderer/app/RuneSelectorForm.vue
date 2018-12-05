@@ -17,9 +17,7 @@
     const GreyIconExtensionURL = '?image=e_grayscale&v=1';
     const StatsShardPath = "http://opgg-static.akamaized.net/images/lol/perkShard/";
     const LocalPathToRunes = "../DynamicJSONS/ChampRunes.json"; //todo set this to a variable thats installed
-
-    var JsonSaveType = 'text/plain';
-
+    
     /** Update Objects**/
     var componentObj = 0;
 
